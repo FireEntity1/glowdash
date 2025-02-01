@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://dlueisqa30wkc"]
+
+[ext_resource type="Script" path="res://Scripts/title.gd" id="1_cjhac"]
+[ext_resource type="Shader" path="res://Other/glitch.gdshader" id="2_370m6"]
+[ext_resource type="Shader" path="res://Other/fire.gdshader" id="2_lang7"]
+[ext_resource type="AudioStream" uid="uid://ddsd2tsrgk6ol" path="res://Other/start.mp3" id="4_b4fxd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k4pgk"]
+shader = ExtResource("2_lang7")
+shader_parameter/fire_color = Color(0.686033, 0.38136, 1, 1)
+shader_parameter/fire_power_factor = 0.1
+shader_parameter/fire_intensity = 0.08
+shader_parameter/fire_start = 4.0
+shader_parameter/ball_size = 3.0
+shader_parameter/roughness = 0.675
+shader_parameter/detail = 3
+shader_parameter/scale = 10.0
+shader_parameter/lacunarity = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5hx5b"]
+shader = ExtResource("2_370m6")
+shader_parameter/shake_power = 0.01
+shader_parameter/shake_rate = 0.099
+shader_parameter/shake_speed = 3.0
+shader_parameter/shake_block_size = 12.0
+shader_parameter/shake_color_rate = 0.01
+
+[node name="Title" type="Node2D"]
+script = ExtResource("1_cjhac")
+
+[node name="bg" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_k4pgk")
+offset_left = -2328.0
+offset_top = -427.0
+offset_right = 5559.0
+offset_bottom = 1612.0
+color = Color(1, 1, 1, 0.239216)
+
+[node name="bg2" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_k4pgk")
+offset_left = 3952.0
+offset_top = 1571.0
+offset_right = 11839.0
+offset_bottom = 3610.0
+rotation = 3.136
+color = Color(1, 1, 1, 0.239216)
+
+[node name="play" type="Button" parent="."]
+offset_left = 531.0
+offset_top = 745.0
+offset_right = 1442.0
+offset_bottom = 977.0
+theme_override_font_sizes/font_size = 250
+text = "PLAY"
+
+[node name="title" type="Label" parent="."]
+offset_left = 297.0
+offset_top = 46.0
+offset_right = 1688.0
+offset_bottom = 207.0
+scale = Vector2(1, 2.16)
+theme_override_font_sizes/font_size = 175
+text = "GLOW DASH"
+
+[node name="hs" type="Label" parent="."]
+offset_left = 123.0
+offset_top = 479.0
+offset_right = 6299.0
+offset_bottom = 965.0
+scale = Vector2(0.269591, 0.582316)
+theme_override_font_sizes/font_size = 175
+text = "HIGHSCORE: 0"
+horizontal_alignment = 1
+
+[node name="glitch" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_5hx5b")
+offset_left = 198.0
+offset_top = -35.0
+offset_right = 1759.0
+offset_bottom = 459.0
+
+[node name="start" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_b4fxd")
+volume_db = 6.933
+autoplay = true
+max_distance = 4500.0
+attenuation = 1.7411e-05
+
+[node name="fade" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[connection signal="button_up" from="play" to="." method="_on_play_button_up"]

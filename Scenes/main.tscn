@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://cedlgiegy8k4a"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_5tgtn"]
+[ext_resource type="Shader" path="res://Other/fire.gdshader" id="2_kcbu0"]
+[ext_resource type="PackedScene" uid="uid://pgqmdllbn55o" path="res://Scenes/player.tscn" id="2_vaxw5"]
+[ext_resource type="AudioStream" uid="uid://c4mw8ws0etthe" path="res://Other/bgloop.mp3" id="4_hy5mq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i3cri"]
+shader = ExtResource("2_kcbu0")
+shader_parameter/fire_color = Color(0.686033, 0.38136, 1, 1)
+shader_parameter/fire_power_factor = 0.1
+shader_parameter/fire_intensity = 0.08
+shader_parameter/fire_start = 4.0
+shader_parameter/ball_size = 3.0
+shader_parameter/roughness = 0.675
+shader_parameter/detail = 3
+shader_parameter/scale = 10.0
+shader_parameter/lacunarity = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7p1r"]
+size = Vector2(1921, 190)
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_5tgtn")
+
+[node name="bg" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_i3cri")
+offset_left = -5006.0
+offset_top = -420.0
+offset_right = 2881.0
+offset_bottom = 1619.0
+color = Color(1, 1, 1, 0.239216)
+
+[node name="player" parent="." instance=ExtResource("2_vaxw5")]
+position = Vector2(148, 273)
+
+[node name="spawn" type="Timer" parent="."]
+wait_time = 1.4
+autostart = true
+
+[node name="decoration" type="Timer" parent="."]
+wait_time = 0.4
+autostart = true
+
+[node name="music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_hy5mq")
+autoplay = true
+attenuation = 1e-05
+
+[node name="border" type="Area2D" parent="."]
+
+[node name="col2" type="CollisionShape2D" parent="border"]
+position = Vector2(951, -291)
+shape = SubResource("RectangleShape2D_h7p1r")
+
+[node name="col3" type="CollisionShape2D" parent="border"]
+position = Vector2(951, 1332)
+shape = SubResource("RectangleShape2D_h7p1r")
+
+[connection signal="timeout" from="spawn" to="." method="_on_spawn_timeout"]
+[connection signal="timeout" from="decoration" to="." method="_on_decoration_timeout"]
+[connection signal="body_entered" from="border" to="." method="_on_border_body_entered"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://pgqmdllbn55o"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_722yk"]
+[ext_resource type="Shader" path="res://Other/blur.gdshader" id="2_8ykjr"]
+[ext_resource type="AudioStream" uid="uid://raejwkfpxuky" path="res://Other/blip.mp3" id="3_q2n4a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_scclt"]
+size = Vector2(112, 114)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xpwt7"]
+shader = ExtResource("2_8ykjr")
+shader_parameter/dir = Vector2(0.4, 0.7)
+shader_parameter/quality = 100
+
+[node name="player" type="Node2D"]
+
+[node name="character" type="CharacterBody2D" parent="."]
+script = ExtResource("1_722yk")
+
+[node name="col" type="CollisionShape2D" parent="character"]
+shape = SubResource("RectangleShape2D_scclt")
+
+[node name="color" type="ColorRect" parent="character"]
+material = SubResource("ShaderMaterial_xpwt7")
+offset_left = -61.0
+offset_top = -58.0
+offset_right = 58.0
+offset_bottom = 58.0
+color = Color(1, 0.711572, 0.918463, 1)
+
+[node name="jump" type="AudioStreamPlayer2D" parent="character"]
+stream = ExtResource("3_q2n4a")
+attenuation = 1e-05
